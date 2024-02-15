@@ -1,0 +1,31 @@
+repos:
+  - repo: local
+    hooks:
+      - id: autoflake
+        name: Remove unused variables and imports
+        entry: poetry run autoflake
+        language: python
+        args:
+          [
+            "--in-place",
+            "--remove-all-unused-imports",
+            "--remove-unused-variables",
+            "--expand-star-imports",
+            "--ignore-init-module-imports",
+          ]
+        types: [python]
+      - id: isort
+        name: Sorting import statements
+        entry: poetry run isort
+        language: python
+        types: [python]
+      - id: black
+        name: Black Python code formatting
+        entry: poetry run black
+        language: python
+        types: [python]
+      - id: flake8
+        name: Flake8 Python code linter
+        entry: poetry run flake8
+        language: python
+        types: [python]
