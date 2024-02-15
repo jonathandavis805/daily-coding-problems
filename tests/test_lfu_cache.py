@@ -18,4 +18,6 @@ def test_cache():
     assert cache.get("test2") is not None
     assert cache.get("test3") is not None
     assert cache.get("test5") is not None
+    assert cache.get("test4") is None
+    
 
