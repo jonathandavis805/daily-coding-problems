@@ -1,7 +1,10 @@
+from typing import TypeVar
+
+
 class Node:
     def __init__(self, data):
         self.data = data
-        self.next = None
+        self.next: Node | None = None
 
 
 class LinkedList:
@@ -127,37 +130,66 @@ class LinkedList:
             print(current_node.data)
             current_node = current_node.next
 
+    def reverse_in_place(self):
+        if self.head is None:
+            return
+        current_node = self.head
+        self.head = current_node
+        prev = None
+        while current_node:
+            next = current_node.next
+            current_node.next = prev
+            prev = current_node
+            current_node = next
+        self.head = prev
+        print(prev)
+        print(self.head)
+        current_node = self.head
+        while current_node.next:
+            print(current_node.data)
+            current_node = current_node.next
+    
+        
 
-# create a new linked list
-llist = LinkedList()
-
-# add nodes to the linked list
-llist.insertAtEnd("a")
-llist.insertAtEnd("b")
-llist.insertAtBegin("c")
-llist.insertAtEnd("d")
-llist.insertAtIndex("g", 2)
-
-# print the linked list
-print("Node Data")
-llist.printLL()
-
-# remove a nodes from the linked list
-print("\nRemove First Node")
-llist.remove_first_node()
-print("Remove Last Node")
-llist.remove_last_node()
-print("Remove Node at Index 1")
-llist.remove_at_index(1)
+    def visualize(self):
+        if self.head is not None:
+            current = self.head
+            while current is not None:
+                if type(current.data) == int:
+                    print("█" * current.data)
+                else:
+                    print(current)
+                current = current.next
 
 
-# print the linked list again
-print("\nLinked list after removing a node:")
-llist.printLL()
 
-print("\nUpdate node Value")
-llist.updateNode("z", 0)
-llist.printLL()
-
-print("\nSize of linked list :", end=" ")
-print(llist.sizeOfLL())
+def merge_2_sorted(list_1: LinkedList, list_2: LinkedList):
+    result = LinkedList()
+    if list_2.head.data > list_1.head.data:
+        result.head = list_1.head
+        list_1.head = list_1.head.next 
+    else:
+        result.head = list_2.head
+        list_2.head = list_2.head.next 
+    current = result.head
+    while list_1.head or list_2.head:
+        if list_2.head is None:
+            current.next = list_1.head
+            list_1.head = list_1.head.next
+        elif list_1.head is None:
+            current.next = list_2.head
+            list_2.head = list_2.head.next 
+        elif list_2.head.data > list_1.head.data:
+            current.next = list_1.head
+            list_1.head = list_1.head.next 
+        else:
+            current.next = list_2.head
+            list_2.head = list_2.head.next 
+        current = current.next
+    
+    return result
+        
+def merge_sorted(lists: list[LinkedList]):
+    quantity = len(lists)
+    quantity % 2
+    lists[0]
