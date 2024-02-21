@@ -1,6 +1,3 @@
-from typing import TypeVar
-
-
 class Node:
     def __init__(self, data):
         self.data = data
@@ -148,29 +145,26 @@ class LinkedList:
         while current_node.next:
             print(current_node.data)
             current_node = current_node.next
-    
-        
 
     def visualize(self):
         if self.head is not None:
             current = self.head
             while current is not None:
-                if type(current.data) == int:
+                if type(current.data) is int:
                     print("█" * current.data)
                 else:
                     print(current)
                 current = current.next
 
 
-
 def merge_2_sorted(list_1: LinkedList, list_2: LinkedList):
     result = LinkedList()
     if list_2.head.data > list_1.head.data:
         result.head = list_1.head
-        list_1.head = list_1.head.next 
+        list_1.head = list_1.head.next
     else:
         result.head = list_2.head
-        list_2.head = list_2.head.next 
+        list_2.head = list_2.head.next
     current = result.head
     while list_1.head or list_2.head:
         if list_2.head is None:
@@ -178,18 +172,27 @@ def merge_2_sorted(list_1: LinkedList, list_2: LinkedList):
             list_1.head = list_1.head.next
         elif list_1.head is None:
             current.next = list_2.head
-            list_2.head = list_2.head.next 
+            list_2.head = list_2.head.next
         elif list_2.head.data > list_1.head.data:
             current.next = list_1.head
-            list_1.head = list_1.head.next 
+            list_1.head = list_1.head.next
         else:
             current.next = list_2.head
-            list_2.head = list_2.head.next 
+            list_2.head = list_2.head.next
         current = current.next
-    
     return result
-        
+
+
 def merge_sorted(lists: list[LinkedList]):
-    quantity = len(lists)
-    quantity % 2
-    lists[0]
+    print(f"merging {len(lists)}")
+    if len(lists) == 1:
+        return lists[0]
+    elif len(lists) == 2:
+        first = lists.pop()
+        second = lists.pop()
+        return merge_2_sorted(first, second)
+    else:
+        split_at = round(len(lists)/2)
+        lists_a = merge_sorted(lists[:split_at])
+        lists_b = merge_sorted(lists[split_at:])
+        return merge_2_sorted(lists_a, lists_b)
